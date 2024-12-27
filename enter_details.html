@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Enter Your Details</h1>
+        <a href="cart.html">Back to Cart</a>
+    </header>
+
+    <main>
+
+        <div class="mini-cart">
+            <h3>Items in your Cart</h3>
+            <div id="mini-cart-items">
+                <!-- Mini cart items will be injected here by JavaScript -->
+            </div>
+            <div id="mini-cart-total-price" style="display:none;"></div>
+        </div>
+
+        <form id="details-form">
+            <label for="full-name">Full Name:</label>
+            <input type="text" id="full-name" required>
+            
+            <label for="contact">Contact Number:</label>
+            <input type="text" id="contact" required>
+            
+            <label for="address">Full Address:</label>
+            <textarea id="address" required></textarea>
+            
+            <div>
+                <input type="radio" name="payment" value="online" id="pay-online" checked>
+                <label for="pay-online">Pay Online</label>
+                
+                <input type="radio" name="payment" value="on-delivery" id="pay-delivery">
+                <label for="pay-delivery">Pay on Delivery</label>
+            </div>
+            
+            <button type="submit" id="place-order-btn">Proceed to Pay</button>
+        </form>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

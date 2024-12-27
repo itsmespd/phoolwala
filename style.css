@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    padding: 1rem;
+}
+
+.sort-options {
+    margin-bottom: 20px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.product {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    text-align: center;
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+}
+
+#cart-items {
+    padding: 1rem;
+    background-color: #fff;
+}
+
+#cart-actions button {
+    padding: 0.5rem 1rem;
+    margin-top: 20px;
+}
+
+#details-form label {
+    display: block;
+    margin-top: 10px;
+}
+
+#details-form input,
+#details-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 5px;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Mini cart container */
+.mini-cart {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Mini cart item styling */
+.mini-cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.mini-cart-img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+.item-title {
+    flex: 1; /* Ensure the title takes available space */
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .mini-cart-item {
+        font-size: 12px;
+    }
+
+    .mini-cart-img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Styling for the confirmation page */
+.confirmation-message {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.order-summary {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+

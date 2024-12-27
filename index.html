@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storefront</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Store</h1>
+        <a href="cart.html">Go to Cart</a>
+    </header>
+    
+    <main>
+        <div class="sort-options">
+            <label for="sortPrice">Sort by Price:</label>
+            <select id="sortPrice" onchange="sortProducts()">
+                <option value="low-high">Price: Low to High</option>
+                <option value="high-low">Price: High to Low</option>
+            </select>
+        </div>
+
+        <div class="products" id="product-list">
+            <!-- Product items will be injected here by JavaScript -->
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Automatically sort the products by price: low to high when the page is loaded
+        window.onload = function() {
+            document.getElementById('sortPrice').value = 'low-high'; // Default to low to high
+            sortProducts(); // Sort products on page load
+            renderProducts(); // Ensure products are rendered
+        }
+    </script>
+</body>
+</html>

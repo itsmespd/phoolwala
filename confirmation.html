@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Order Confirmation</h1>
+    </header>
+
+    <main>
+        <div class="confirmation-message">
+            <h2>Your order has been placed successfully!</h2>
+            <p>The amount will be collected at the time of delivery.</p>
+        </div>
+
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+
+            <div id="order-id"></div>
+            <div id="mini-cart-summary"></div>
+        </div>
+
+        <p>Thank you for your order. Please visit us again!</p>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+
+        // Display the order summary with mini cart and order ID
+        function renderOrderSummary() {
+            const orderId = generateOrderId();
+            const miniCartSummary = document.getElementById('mini-cart-summary');
+            const orderIdDiv = document.getElementById('order-id');
+
+            // Show the order ID
+            orderIdDiv.innerHTML = `<strong>Order ID:</strong> ${orderId}`;
+
+            // Get the cart from session storage
+            const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+            if (cart.length === 0) {
+                miniCartSummary.innerHTML = "<p>No items in the cart.</p>";
+            } else {
+                let miniCartHtml = cart.map(item => `
+                    <div class="mini-cart-item">
+                        <img src="${item.image}" alt="${item.name}" class="mini-cart-img">
+                        <span class="item-title">${item.name}</span>
+                        <span class="item-quantity">x${item.quantity}</span>
+                        <span class="item-total-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `).join("");
+
+                // Calculate the total price of the cart items
+                const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+                
+                miniCartHtml += `<div class="total-price"><strong>Total: $${totalPrice.toFixed(2)}</strong></div>`;
+                miniCartSummary.innerHTML = miniCartHtml;
+            }
+        }
+
+        // Render the order summary when the page loads
+        window.onload = function() {
+            renderOrderSummary();
+        }
+    </script>
+
+    <style>
+        /* Styling for the confirmation page */
+        .confirmation-message {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .order-summary {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .mini-cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .mini-cart-img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+        }
+
+        .item-title {
+            flex: 1;
+        }
+
+        .item-quantity,
+        .item-total-price {
+            margin-left: 10px;
+        }
+
+        .total-price {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .mini-cart-item,
+        .total-price {
+            font-size: 14px;
+        }
+    </style>
+</body>
+</html>
