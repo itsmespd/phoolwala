@@ -123,11 +123,41 @@ button:hover {
 .confirmation-message {
     text-align: center;
     margin-bottom: 30px;
+    margin-top: 50px;
+    color: green;
+}
+
+.confirmation-message img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
 }
 
 .order-summary {
+    margin: 20px auto;
+    padding: 20px;
     border: 1px solid #ccc;
-    padding: 10px;
     background-color: #f9f9f9;
+    max-width: 600px;
 }
 
+.thank-you-message {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 18px;
+}
+
+.order-summary h2, h3 {
+    text-align: center;
+}
+
+#order-id-container {
+    text-align: center;
+}
+
+#back-to-store {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+}

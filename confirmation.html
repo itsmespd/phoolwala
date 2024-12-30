@@ -7,110 +7,57 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Order Confirmation</h1>
-    </header>
-
     <main>
         <div class="confirmation-message">
-            <h2>Your order has been placed successfully!</h2>
-            <p>The amount will be collected at the time of delivery.</p>
+            <img src="./images/cnfTik.svg" alt="Success Icon">
+            <h1>Your order has been placed successfully!</h1>
+            <p id="payment-message">The amount will be collected at the time of delivery.</p>
         </div>
-
+        
         <div class="order-summary">
-            <h3>Order Summary</h3>
+            <h2>Order Summary</h2>
+            <p id="order-id-container"><strong>Order ID:</strong> <span id="order-id"></span></p>
+            <div id="mini-cart-items">
+                <!-- Mini cart items will be injected here -->
+            </div>
+            <div id="mini-cart-total-price" style="display:none;"></div>
 
-            <div id="order-id"></div>
-            <div id="mini-cart-summary"></div>
+            <h3>Delivery Details</h3>
+            <p><strong>Name:</strong> <span id="user-name"></span></p>
+            <p><strong>Contact:</strong> <span id="user-contact"></span></p>
+            <p><strong>Address:</strong> <span id="user-address"></span></p>
+            <p><strong>Payment Mode:</strong> <span id="payment-mode"></span></p>
         </div>
-
-        <p>Thank you for your order. Please visit us again!</p>
+        
+        <p class="thank-you-message">Thank you for your order. Please visit us again!</p>
+        <button onclick="redirectToStore()" id="back-to-store">Back to Store</button>
     </main>
 
     <script src="script.js"></script>
     <script>
+        // Populate the confirmation page
+if (window.location.pathname.includes('confirmation.html')) {
+    const userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
 
-        // Display the order summary with mini cart and order ID
-        function renderOrderSummary() {
-            const orderId = generateOrderId();
-            const miniCartSummary = document.getElementById('mini-cart-summary');
-            const orderIdDiv = document.getElementById('order-id');
+    // Check if userDetails exist
+    if (userDetails) {
+        const orderId = generateOrderId();
 
-            // Show the order ID
-            orderIdDiv.innerHTML = `<strong>Order ID:</strong> ${orderId}`;
+        // Populate the confirmation page
+        document.getElementById('order-id').textContent = orderId;
+        document.getElementById('user-name').textContent = userDetails.fullName;
+        document.getElementById('user-contact').textContent = userDetails.contact;
+        document.getElementById('user-address').textContent = userDetails.address;
+        document.getElementById('payment-mode').textContent = 
+            userDetails.paymentOption === "online" ? "Online Payment" : "Pay on Delivery";
 
-            // Get the cart from session storage
-            const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-
-            if (cart.length === 0) {
-                miniCartSummary.innerHTML = "<p>No items in the cart.</p>";
-            } else {
-                let miniCartHtml = cart.map(item => `
-                    <div class="mini-cart-item">
-                        <img src="${item.image}" alt="${item.name}" class="mini-cart-img">
-                        <span class="item-title">${item.name}</span>
-                        <span class="item-quantity">x${item.quantity}</span>
-                        <span class="item-total-price">$${(item.price * item.quantity).toFixed(2)}</span>
-                    </div>
-                `).join("");
-
-                // Calculate the total price of the cart items
-                const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-                
-                miniCartHtml += `<div class="total-price"><strong>Total: $${totalPrice.toFixed(2)}</strong></div>`;
-                miniCartSummary.innerHTML = miniCartHtml;
-            }
-        }
-
-        // Render the order summary when the page loads
-        window.onload = function() {
-            renderOrderSummary();
-        }
+        // Populate mini cart
+        renderMiniCart();
+    } else {
+        // Redirect back to index.html if session storage is empty
+        redirectToStore();
+    }
+}
     </script>
-
-    <style>
-        /* Styling for the confirmation page */
-        .confirmation-message {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .order-summary {
-            border: 1px solid #ccc;
-            padding: 10px;
-            background-color: #f9f9f9;
-        }
-
-        .mini-cart-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .mini-cart-img {
-            width: 25px;
-            height: 25px;
-            margin-right: 10px;
-        }
-
-        .item-title {
-            flex: 1;
-        }
-
-        .item-quantity,
-        .item-total-price {
-            margin-left: 10px;
-        }
-
-        .total-price {
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        .mini-cart-item,
-        .total-price {
-            font-size: 14px;
-        }
-    </style>
 </body>
 </html>

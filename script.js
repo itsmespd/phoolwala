@@ -180,24 +180,42 @@ window.onload = function() {
 }
 
 // Handle the form submission for payment options
-document.getElementById('details-form').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent the form from submitting normally
+// Add event listener for the details form only if it exists
+const detailsForm = document.getElementById('details-form');
 
-    const paymentOption = document.querySelector('input[name="payment"]:checked').value;
-    
-    if (paymentOption === "online") {
-        // Redirect to the payment gateway (dummy URL for example)
-        window.location.href = "https://www.paymentgateway.com"; // Replace with actual payment URL
-    } else if (paymentOption === "on-delivery") {
-        // Redirect to the Confirmation page
-        window.location.href = "confirmation.html"; // Redirect to confirmation page
-    }
-});
+if (detailsForm) {
+    detailsForm.addEventListener('submit', function (event) {
+        event.preventDefault();
 
-// Generate a random 3-digit order ID
+        const fullName = document.getElementById('full-name').value;
+        const contact = document.getElementById('contact').value;
+        const address = document.getElementById('address').value;
+        const paymentOption = document.querySelector('input[name="payment"]:checked').value;
+
+        // Store details in sessionStorage
+        sessionStorage.setItem('userDetails', JSON.stringify({ fullName, contact, address, paymentOption }));
+
+        if (paymentOption === "online") {
+            // Simulate redirecting to payment gateway
+            setTimeout(() => {
+                window.location.href = "confirmation.html";
+            }, 1000);
+        } else {
+            window.location.href = "confirmation.html";
+        }
+    });
+}
+
+// Function to generate order ID
 function generateOrderId() {
-    const date = new Date();
-    const formattedDate = `${date.getDate().toString().padStart(2, '0')}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getFullYear()}`;
-    const randomThreeDigitNumber = Math.floor(100 + Math.random() * 900); // Random 3 digits
-    return `${formattedDate}-${randomThreeDigitNumber}`;
+    const now = new Date();
+    const date = `${now.getDate().toString().padStart(2, '0')}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getFullYear()}`;
+    const time = `${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
+    return `${date}-${time}`;
+}
+
+// Clear sessionStorage and redirect on "Back to Store"
+function redirectToStore() {
+    sessionStorage.clear();
+    window.location.href = "index.html";
 }
