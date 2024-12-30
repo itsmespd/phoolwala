@@ -89,20 +89,41 @@ function renderCart() {
     const addItemsBtn = document.getElementById("add-items-btn");
     const totalPriceElem = document.getElementById("total-price");
 
+    // Clear existing items
+    cartItems.innerHTML = "";
+
+    // Retrieve the cart from sessionStorage
+    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
     if (cart.length === 0) {
         cartItems.innerHTML = "<p>Nothing added to the cart yet.</p>";
         checkoutBtn.style.display = "none";
         addItemsBtn.style.display = "block";
         totalPriceElem.style.display = "none";
     } else {
-        cartItems.innerHTML = cart.map(item => `
-            <div class="cart-item">
-                <img src="${item.image}" alt="${item.name}">
-                <h3>${item.name}</h3>
-                <p>Quantity: ${item.quantity}</p>
-                <p>Price: $${(item.price * item.quantity).toFixed(2)}</p>
+        // Populate the cart items dynamically
+        cart.forEach(item => {
+            const cartItem = document.createElement("div");
+            cartItem.classList.add("cart-item");
+
+            cartItem.innerHTML = `
+            <div class="cart-item-content">
+                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                <div class="cart-item-details">
+                    <h3>${item.name}</h3>
+                    <p>Price: $${(item.price * item.quantity).toFixed(2)}</p>
+                </div>
+                <div class="quantity-controls">
+                    <button onclick="decreaseQuantity(${item.id})">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="increaseQuantity(${item.id})">+</button>
+                    <button onclick="confirmRemoveItem(${item.id})" class="remove-icon">🗑️</button>
+                </div>
             </div>
-        `).join("");
+        `;
+
+            cartItems.appendChild(cartItem);
+        });
 
         //Calculate total price
         const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
@@ -111,9 +132,60 @@ function renderCart() {
         totalPriceElem.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
         totalPriceElem.style.display = "block"; // Show total price
 
-        checkoutBtn.style.display = "block";
-        addItemsBtn.style.display = "none";
+        checkoutBtn.style.display = "inline-block";
+        addItemsBtn.style.display = "inline-block";
     }
+}
+
+// Function to increase quantity
+function increaseQuantity(productId) {
+    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    const item = cart.find(p => p.id === productId);
+
+    if (item) {
+        item.quantity++;
+        sessionStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+    }
+}
+
+// Function to decrease quantity
+function decreaseQuantity(productId) {
+    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    const itemIndex = cart.findIndex(p => p.id === productId);
+
+    if (itemIndex !== -1) {
+        const item = cart[itemIndex];
+
+        if (item.quantity > 1) {
+            item.quantity--;
+        } else {
+            const confirmed = confirm("Are you sure you want to remove this item from the cart?");
+            if (confirmed) {
+                cart.splice(itemIndex, 1);
+            }
+        }
+
+        sessionStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+    }
+}
+
+// Function to confirm removal of an item
+function confirmRemoveItem(productId) {
+    const confirmed = confirm("Are you sure you want to remove this item from the cart?");
+    if (confirmed) {
+        removeItemCartPage(productId);
+    }
+}
+
+// Function to remove an item from the cart
+function removeItemCartPage(productId) {
+    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    const updatedCart = cart.filter(item => item.id !== productId);
+
+    sessionStorage.setItem("cart", JSON.stringify(updatedCart));
+    renderCart();
 }
 
 // Function to redirect to storefront
@@ -219,3 +291,5 @@ function redirectToStore() {
     sessionStorage.clear();
     window.location.href = "index.html";
 }
+
+

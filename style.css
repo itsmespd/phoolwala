@@ -147,7 +147,7 @@ button:hover {
     font-size: 18px;
 }
 
-.order-summary h2, h3 {
+.order-summary h2, .order-summary h3 {
     text-align: center;
 }
 
@@ -160,4 +160,60 @@ button:hover {
     justify-content: center;
     align-items: center;
     text-align: center; 
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity-controls button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.quantity-controls .remove-icon {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.quantity-controls button:hover {
+    background-color: #555;
+}
+
+/* Styling for cart item container */
+.cart-item-content {
+    display: flex;
+    align-items: center; /* Vertically align content */
+    gap: 20px; /* Space between elements */
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+/* Styling for item image */
+.cart-item-image {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Styling for item details */
+.cart-item-details {
+    flex-grow: 1; /* Allow details to take up remaining space */
+}
+
+.quantity-controls .remove-icon:hover {
+    color: darkred;
 }
