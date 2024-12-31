@@ -292,4 +292,46 @@ function redirectToStore() {
     window.location.href = "index.html";
 }
 
+//Send session storage data to database
+function sendDataToDatabase() {
+    if (window.location.pathname.includes('confirmation.html')) {
+        const userDetails = JSON.parse(sessionStorage.getItem('userDetails'));
+        const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+    
+        if (userDetails && cart.length > 0) {
 
+            // Combine userDetails and cart into a single object
+            const dataToSend = {
+                userDetails: userDetails,
+                cart: cart,
+            };
+    
+            // Send data to Google Sheets using the Web App URL
+            fetch("https://script.google.com/macros/s/AKfycbzlYo-V97AgM1UrJ7Z-lAPqxO2AVT-OQcEKJ2T8fXIIzlzoNz6H_LYRrkRwSVInVdTA_A/exec", { // Replace with your Web App URL
+                redirect: "follow",
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataToSend),
+            })
+            .then(response => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+              })
+              .then(result => {
+                console.log("Data successfully sent to Google Sheets:", result);
+              })
+              .catch(error => {
+                console.error("Error sending data to Google Sheets:", error);
+              });
+        } else {
+            console.error("No data available in session storage to transfer.");
+        }
+        // Clear session storage after successful transfer
+        sessionStorage.clear();
+    }
+}

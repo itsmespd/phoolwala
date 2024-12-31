@@ -43,6 +43,12 @@ if (window.location.pathname.includes('confirmation.html')) {
     if (userDetails) {
         const orderId = generateOrderId();
 
+        // Add the order ID to userDetails
+        userDetails.orderId = orderId;
+
+        // Update userDetails in sessionStorage
+        sessionStorage.setItem('userDetails', JSON.stringify(userDetails));
+
         // Populate the confirmation page
         document.getElementById('order-id').textContent = orderId;
         document.getElementById('user-name').textContent = userDetails.fullName;
@@ -53,6 +59,7 @@ if (window.location.pathname.includes('confirmation.html')) {
 
         // Populate mini cart
         renderMiniCart();
+        sendDataToDatabase();
     } else {
         // Redirect back to index.html if session storage is empty
         redirectToStore();
