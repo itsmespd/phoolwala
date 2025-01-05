@@ -3,16 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Storefront</title>
+    <title>Phoolwala | Storefront</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to Our Store</h1>
-        <a href="cart.html">Go to Cart</a>
+    <header class="storefront-header">
+        <h1>Phoolwala</h1>
+        <!-- Cart Icon with Item Count -->
+        <div id="cart-icon-container">
+            <a href="cart.html" id="cart-icon" style="right: 20px;">
+                🛒 <span id="cart-count" style="color: whitesmoke; font-weight: bold;"></span>
+            </a>
+        </div>
     </header>
     
     <main>
+        <div class="sort-options">
+            <h2>Welcome to Phoolwala! 👏</h2>
+            <p>👉<strong>No account creation. No data collection. Just pure bhakti. 🙏</strong></p>
+            <a href="about_us.html">Know more about us.</a>
+        </div>
+        
+        <div class="sort-options">
+            <h3>Note:</h3>
+            <p style="color: red;">👉<strong>All orders placed today by 10 PM will be delivered tomorrow by 8 AM.👈</strong></p>
+        </div>
+
         <div class="sort-options">
             <label for="sortPrice">Sort by Price:</label>
             <select id="sortPrice" onchange="sortProducts()">
@@ -26,10 +42,35 @@
         </div>
     </main>
 
+    <!-- Go to Cart Button at the Bottom -->
+    <footer>
+        <button id="go-to-cart-button" onclick="goToCart()">Go to Cart</button>
+    </footer>
+
     <script src="script.js"></script>
     <script>
+        // Initialize cart count and render it
+        function updateCartCount() {
+            const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartCountElement = document.getElementById("cart-count");
+            const cartButton = document.getElementById("go-to-cart-button");
+
+            // Update cart count on the cart icon
+            cartCountElement.textContent = cartCount > 0 ? `(${cartCount})` : "";
+
+            // Update cart count on the Go to Cart button
+            cartButton.textContent = cartCount > 0 ? `Go to Cart (${cartCount})` : "Go to Cart";
+        }
+
+        // Function to redirect to the cart page
+        function goToCart() {
+            window.location.href = "cart.html";
+        }
+
         // Automatically sort the products by price: low to high when the page is loaded
         window.onload = function() {
+            updateCartCount();
             document.getElementById('sortPrice').value = 'low-high'; // Default to low to high
             sortProducts(); // Sort products on page load
             renderProducts(); // Ensure products are rendered

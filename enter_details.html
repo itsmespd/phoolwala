@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter Details</title>
+    <title>Phoolwala | Enter Details</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
+    <header class="enter-details-header">
         <h1>Enter Your Details</h1>
         <a href="cart.html">Back to Cart</a>
     </header>
 
     <main>
-
+        <div class="sort-options">
+            <h3>Note:</h3>
+            <p style="color: red;">👉<strong>All orders placed today by 10 PM will be delivered tomorrow by 8 AM.👈</strong></p>
+        </div>
+        
         <div class="mini-cart">
             <h3>Items in your Cart</h3>
             <div id="mini-cart-items">
@@ -24,13 +28,13 @@
 
         <form id="details-form">
             <label for="full-name">Full Name:</label>
-            <input type="text" id="full-name" required>
+            <input type="text" id="full-name" placeholder="Enter your full name" required>
             
             <label for="contact">Contact Number:</label>
-            <input type="number" id="contact" required>
+            <input type="number" id="contact" maxlength="10" oninput="validateContact(this)" placeholder="Enter your 10-digit contact number" required>
             
             <label for="address">Full Address:</label>
-            <textarea id="address" required></textarea>
+            <textarea id="address" placeholder="Enter your full address" required></textarea>
             
             <div>
                 <input type="radio" name="payment" value="online" id="pay-online" checked>

@@ -13,6 +13,21 @@ body {
 }
 
 /* Header Styling */
+.storefront-header {
+    background-color: #ffa500; /* Bright orange */
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Header Styling */
 header {
     background-color: #ffa500; /* Bright orange */
     color: #fff;
@@ -24,7 +39,7 @@ header {
     z-index: 1000;
 }
 
-header h1::after {
+.storefront-header h1::after {
     content: " 🌼"; /* Flower emoji for fun */
 }
 
@@ -33,6 +48,76 @@ header a {
     text-decoration: none;
     font-size: 1rem;
     margin-left: 10px;
+}
+
+/* Cart Icon Styling */
+#cart-icon-container {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#cart-icon {
+    font-size: 2rem; /* Bigger cart icon */
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+}
+
+#cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    font-size: 1rem; /* Bigger count */
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 50%; /* Circular badge */
+    min-width: 20px;
+    text-align: center;
+}
+
+/* "Go to Cart" Button Styling */
+footer {
+    text-align: center;
+    padding: 2rem;
+}
+
+#go-to-cart-button {
+    margin: 0 auto;
+    background-color: #ffa500;
+    font-size: 1.2rem; /* Slightly larger for visibility */
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column; /* Stack title and cart icon */
+        text-align: center;
+    }
+
+    #cart-icon-container {
+        position: static; /* Reposition for mobile */
+        transform: none;
+        margin-top: 10px;
+    }
+
+    #cart-icon {
+        font-size: 1.5rem; /* Smaller cart icon on small screens */
+    }
+
+    #cart-count {
+        font-size: 0.8rem; /* Smaller count on small screens */
+        padding: 3px;
+    }
+
+    #go-to-cart-button {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
 }
 
 /* Main Content Styling */
@@ -71,6 +156,10 @@ main {
 
 .sort-options select:hover {
     background-color: #ffe6b3; /* Light orange hover */
+}
+
+option, #sortPrice{
+    font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
 /* Product Grid */
@@ -123,7 +212,7 @@ main {
 }
 
 /* Add to Cart Button */
-.product button {
+.product button, #go-to-cart-button {
     background-color: #ffa500; /* Orange background */
     color: #fff;
     border: none;
@@ -131,11 +220,12 @@ main {
     border-radius: 8px; /* Rounded edges */
     cursor: pointer;
     font-size: 1rem;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
     transition: background-color 0.3s, transform 0.2s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-.product button:hover {
+.product button:hover,  #go-to-cart-button:hover {
     background-color: #ff8c00; /* Darker orange */
     transform: translateY(-2px); /* Lift on hover */
 }
@@ -155,47 +245,10 @@ main {
     }
 }
 
-/* General Reset and Box Sizing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/**********Cart Page**********/
 
-/* Body Styling */
-body {
-    font-family: 'Comic Sans MS', cursive, sans-serif; /* Cartoon-inspired font */
-    background-color: #fff8e7; /* Light yellow background */
-    color: #333;
-}
-
-/* Header Styling */
-header {
-    background-color: #ffa500; /* Bright orange */
-    color: #fff;
-    padding: 1rem;
-    text-align: center;
-    font-size: 1.5rem;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-header h1::after {
+.cart-header h1::after {
     content: " 🛍️"; /* Shopping bag emoji for fun */
-}
-
-header a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    margin-left: 10px;
-}
-
-/* Main Content Styling */
-main {
-    padding: 2rem;
-    background-color: #fff8e7; /* Light yellow background */
 }
 
 /* Cart Items Container */
@@ -329,6 +382,7 @@ main {
     border-radius: 8px; /* Rounded edges */
     cursor: pointer;
     font-size: 1rem;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
     transition: background-color 0.3s, transform 0.2s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
@@ -351,48 +405,10 @@ main {
     font-weight: bold;
 }
 
-/* General Reset and Box Sizing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/**********Enter Details Page**********/
 
-/* Body Styling */
-body {
-    font-family: 'Comic Sans MS', cursive, sans-serif; /* Cartoon-inspired font */
-    background-color: #fff8e7; /* Light yellow background */
-    color: #333;
-    padding: 1rem;
-}
-
-/* Header Styling */
-header {
-    background-color: #ffa500; /* Bright orange */
-    color: #fff;
-    padding: 1rem;
-    text-align: center;
-    font-size: 1.5rem;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-header h1::after {
+.enter-details-header h1::after {
     content: " ✍️"; /* Writing hand emoji for fun */
-}
-
-header a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    margin-left: 10px;
-}
-
-/* Main Content Styling */
-main {
-    padding: 2rem;
-    background-color: #fff8e7; /* Light yellow background */
 }
 
 /* Form Container */
@@ -522,6 +538,7 @@ main {
     border-radius: 8px; /* Rounded edges */
     cursor: pointer;
     font-size: 1rem;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
     transition: background-color 0.3s, transform 0.2s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     display: block;

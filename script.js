@@ -1,9 +1,9 @@
 let products = [
-    { id: 1, name: "Product 1", price: 100, image: "https://via.placeholder.com/150" },
-    { id: 2, name: "Product 2", price: 200, image: "https://via.placeholder.com/150" },
-    { id: 3, name: "Product 3", price: 50, image: "https://via.placeholder.com/150" },
-    { id: 4, name: "Product 4", price: 150, image: "https://via.placeholder.com/150" },
-    { id: 5, name: "Product 5", price: 300, image: "https://via.placeholder.com/150" }
+    { id: 1, name: "Khujra Phool(Only Phool)", price: 10, image: "https://via.placeholder.com/150" },
+    { id: 2, name: "Khujra Phool Essentials", price: 20, image: "https://via.placeholder.com/150" },
+    { id: 3, name: "Genda Mala(2 pcs.)", price: 10, image: "https://via.placeholder.com/150" },
+    { id: 4, name: "White Mala(1 pc.)", price: 15, image: "https://via.placeholder.com/150" },
+    { id: 5, name: "Khujra Phool Ultimate", price: 40, image: "https://via.placeholder.com/150" }
 ];
 
 let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
@@ -24,7 +24,7 @@ function renderProducts() {
         let productHTML = `
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
-            <p>Price: $${product.price}</p>
+            <p>Price: ₹${product.price}</p>
             <button onclick="addToCart(${product.id})">Add to Cart</button>
         `;
 
@@ -49,6 +49,7 @@ function sortProducts() {
         products.sort((a, b) => b.price - a.price);
     }
     renderProducts();
+    updateCartCount();
 }
 
 // Function to add products to the cart
@@ -64,6 +65,7 @@ function addToCart(productId) {
 
     sessionStorage.setItem("cart", JSON.stringify(cart));
     renderProducts(); // Re-render products to update buttons and quantities
+    updateCartCount();
 }
 
 // Function to remove a product from the cart
@@ -80,6 +82,7 @@ function removeItem(productId) {
 
     sessionStorage.setItem("cart", JSON.stringify(cart));
     renderProducts(); // Re-render products to update buttons and quantities
+    updateCartCount();
 }
 
 // Function to render cart items on the cart page
@@ -111,7 +114,7 @@ function renderCart() {
                 <img src="${item.image}" alt="${item.name}" class="cart-item-image">
                 <div class="cart-item-details">
                     <h3>${item.name}</h3>
-                    <p>Price: $${(item.price * item.quantity).toFixed(2)}</p>
+                    <p>Price: ₹${(item.price * item.quantity).toFixed(2)}</p>
                 </div>
                 <div class="quantity-controls">
                     <button onclick="decreaseQuantity(${item.id})">-</button>
@@ -129,7 +132,7 @@ function renderCart() {
         const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
         // Display the total price
-        totalPriceElem.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+        totalPriceElem.textContent = `Total Price: ₹${totalPrice.toFixed(2)}`;
         totalPriceElem.style.display = "block"; // Show total price
 
         checkoutBtn.style.display = "inline-block";
@@ -237,11 +240,11 @@ function renderMiniCart() {
                 <img src="${item.image}" alt="${item.name}" class="mini-cart-img">
                 <span class="item-title">${item.name}</span>
                 <span class="item-quantity">x${item.quantity}&nbsp</span>
-                <span class="item-total-price">$${(item.price * item.quantity).toFixed(2)}</span>
+                <span class="item-total-price">₹${(item.price * item.quantity).toFixed(2)}</span>
             </div>
         `).join("");
 
-        totalPriceElem.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+        totalPriceElem.textContent = `Total Price: ₹${totalPrice.toFixed(2)}`;
         totalPriceElem.style.display = "block"; // Show total price
     }
 }
@@ -249,6 +252,17 @@ function renderMiniCart() {
 // Call renderMiniCart to display items when the page loads
 window.onload = function() {
     renderMiniCart(); // Render mini cart on page load
+}
+
+//Function to validate and limit contact number to 10
+function validateContact(input) {
+    // Remove non-numeric characters
+    input.value = input.value.replace(/[^0-9]/g, '');
+    
+    // Limit the length to 10 digits
+    if (input.value.length > 10) {
+        input.value = input.value.slice(0, 10);
+    }
 }
 
 // Handle the form submission for payment options
@@ -331,7 +345,5 @@ function sendDataToDatabase() {
         } else {
             console.error("No data available in session storage to transfer.");
         }
-        // Clear session storage after successful transfer
-        sessionStorage.clear();
     }
 }

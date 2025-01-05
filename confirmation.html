@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmation</title>
+    <title>Phoolwala | Order Confirmation</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,6 +24,7 @@
         <div class="order-summary">
             <h2>Order Summary</h2>
             <p id="order-id-container"><strong>Order ID:</strong> <span id="order-id"></span></p>
+            <p id="order-id-container"><strong>Please note down the above Order ID for any future communication regarding the order.</strong></p>
             <div id="mini-cart-items">
                 <!-- Mini cart items will be injected here -->
             </div>
@@ -56,6 +57,9 @@ if (window.location.pathname.includes('confirmation.html')) {
         // Update userDetails in sessionStorage
         sessionStorage.setItem('userDetails', JSON.stringify(userDetails));
 
+        //Send data to database
+        sendDataToDatabase();
+
         // Populate the confirmation page
         document.getElementById('order-id').textContent = orderId;
         document.getElementById('user-name').textContent = userDetails.fullName;
@@ -68,7 +72,8 @@ if (window.location.pathname.includes('confirmation.html')) {
 
         // Populate mini cart
         renderMiniCart();
-        sendDataToDatabase();
+        // Clear session storage after successful render
+        sessionStorage.clear();
     } else {
         // Redirect back to index.html if session storage is empty
         redirectToStore();
