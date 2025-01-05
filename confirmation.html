@@ -8,10 +8,17 @@
 </head>
 <body>
     <main>
+        <!-- Confetti elements -->
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+
         <div class="confirmation-message">
             <img src="./images/folded-hands.svg" alt="Success Icon">
             <h1>Your order has been placed successfully!</h1>
-            <p id="payment-message">The amount will be collected at the time of delivery.</p>
+            <p id="payment-message"></p>
         </div>
         
         <div class="order-summary">
@@ -56,6 +63,8 @@ if (window.location.pathname.includes('confirmation.html')) {
         document.getElementById('user-address').textContent = userDetails.address;
         document.getElementById('payment-mode').textContent = 
             userDetails.paymentOption === "online" ? "Online Payment" : "Pay on Delivery";
+        document.getElementById('payment-message').textContent = 
+            userDetails.paymentOption === "online" ? "Your Payment has been successfully received." : "The amount will be collected at the time of delivery.";
 
         // Populate mini cart
         renderMiniCart();
